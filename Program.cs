@@ -1,4 +1,5 @@
 using CelebiWebApi.Data;
+using CelebiWebApi.Services;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -13,6 +14,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<CelebiDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DatabaseConnection")));
 
+builder.Services.AddScoped<IUyeService, UyeService>();
 
 var app = builder.Build();
 
