@@ -10,9 +10,14 @@ namespace CelebiWebApi.Data
         }
 
         public DbSet<Uye> Uye { get; set; }
-        public DbSet<Uye> Brans { get; set; }
-        public DbSet<Uye> AltBrans { get; set; }
-        public DbSet<Uye> Personel { get; set; }
-        public DbSet<Uye> UyePaket { get; set; }
+        public DbSet<Brans> Brans { get; set; }
+        public DbSet<AltBrans> AltBrans { get; set; }
+        public DbSet<Personel> Personel { get; set; }
+        public DbSet<UyePaket> UyePaket { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Personel>().ToTable("_Personel");
+        }
     }
 }
