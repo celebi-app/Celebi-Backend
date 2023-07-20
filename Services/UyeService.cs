@@ -36,11 +36,12 @@ namespace CelebiWebApi.Services
                 BabaAdi = _user.BabaAd,
                 AnneTelefon = _user.Tel1,
                 BabaTelefon = _user.Tel2,
+                Adres = _user.Adres,
                 FotoUrl = _user.Foto,
                 Brans = GetBransAd(_user.BransId),
                 AltBrans = GetAltBransAd(_user.AltBransId),
                 Antrenor = GetAntrenorAd(_user.AntrenorId),
-                Kusak = _user.kusakId.ToString(),
+                Kusak = GetKusakAd(_user.BransId, _user.kusakId),
                 KayitTarihi = _user.KayitTarihi,
                 Durum = _user.Durum.ToString(),
                 LisansNo = _user.LisansNo,
@@ -104,6 +105,11 @@ namespace CelebiWebApi.Services
         {
             var brans = _dbContext.Brans.FirstOrDefault(b => b.Id == bransId);
             return brans?.Ad;
+        }
+        private string? GetKusakAd(int? bransId, int? kusakId)
+        {
+            var kusak = _dbContext.Kusak.Where(u => u.BransId == bransId).ToList().SingleOrDefault(u => u.Sira == kusakId);
+            return kusak?.Ad;
         }
 
         private string? GetAltBransAd(int? altBransId)

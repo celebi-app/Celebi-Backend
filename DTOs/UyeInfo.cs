@@ -9,6 +9,7 @@
         public string? BabaAdi { get; set; }
         public string? AnneTelefon { get; set; }
         public string? BabaTelefon { get; set; }
+        public string? Adres { get; set; }
         public string? FotoUrl { get; set; }
         public string? Brans { get; set; }
         public string? AltBrans { get; set; }
