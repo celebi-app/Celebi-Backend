@@ -3,8 +3,8 @@
     public class UyeAidatDTO
     {
         public DateTime? OdemeTarihi { get; set; }
-        public int? Donem { get; set; }
-        public int? Tur { get; set; }
+        public string? Donem { get; set; }
+        public string? Tur { get; set; }
         public double? Borc { get; set; }
         public double? Odenen { get; set; }
         public double? Kalan { get; set; }

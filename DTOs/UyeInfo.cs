@@ -4,6 +4,7 @@
     {
         public string? TC { get; set; }
         public string? AdSoyad { get; set; }
+        public DateTime? DogumTarihi { get; set; }
         public string? AnneAdi { get; set; }
         public string? BabaAdi { get; set; }
         public string? AnneTelefon { get; set; }

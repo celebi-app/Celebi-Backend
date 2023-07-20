@@ -1,5 +1,6 @@
 ﻿using CelebiWebApi.Data;
 using CelebiWebApi.DTOs;
+using CelebiWebApi.Helpers.Extensions;
 using Microsoft.EntityFrameworkCore;
 
 namespace CelebiWebApi.Services
@@ -30,6 +31,7 @@ namespace CelebiWebApi.Services
             {
                 TC = _user.TC,
                 AdSoyad = _user.Ad + " " + _user.Soyad,
+                DogumTarihi = _user.DogumTarihi,
                 AnneAdi = _user.AnneAd,
                 BabaAdi = _user.BabaAd,
                 AnneTelefon = _user.Tel1,
@@ -60,7 +62,6 @@ namespace CelebiWebApi.Services
             _uyePaketler.ForEach(u => {
                 _result.Add(new UyePaketDTO
                 {
-                    UyeId = u.UyeId,
                     Paket = u.Paket,
                     Tutar = u.Tutar,
                     BaslangicTarihi = u.BasTarih,
@@ -73,6 +74,7 @@ namespace CelebiWebApi.Services
 
             return _result;
         }
+
         public async Task<IEnumerable<UyeAidatDTO?>?> GetUyeTahsilat(int id)
         {
 
@@ -82,11 +84,12 @@ namespace CelebiWebApi.Services
             List<UyeAidatDTO?> _result = new List<UyeAidatDTO?>();
 
             _uyeAidatList.ForEach(u => {
+                var _donemResult = (Yil: u.Yil, Donem: u.Donem);
                 _result.Add(new UyeAidatDTO
                 {
                     Borc = u.Borc,
-                    Tur = u.Tur,
-                    Donem = u.Donem,
+                    Tur = u.Tur.TurConverter(),
+                    Donem = _donemResult.DonemConverter(),
                     OdemeTarihi = u.OdemeTarihi,
                     Odenen = u.Odenen,
                     Aciklama = u.Aciklama,
@@ -96,7 +99,6 @@ namespace CelebiWebApi.Services
 
             return _result;
         }
-
 
         private string? GetBransAd(int? bransId)
         {
