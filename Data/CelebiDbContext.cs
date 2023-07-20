@@ -14,6 +14,8 @@ namespace CelebiWebApi.Data
         public DbSet<AltBrans> AltBrans { get; set; }
         public DbSet<Personel> Personel { get; set; }
         public DbSet<UyePaket> UyePaket { get; set; }
+        public DbSet<UyeAidat> UyeAidat { get; set; }
+        
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

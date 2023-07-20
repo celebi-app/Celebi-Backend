@@ -39,6 +39,18 @@ namespace CelebiWebApi.Controllers
 
         }
 
+        [HttpGet("tahsilat/{id}")]
+        public async Task<ActionResult<IEnumerable<UyeAidatDTO?>>> GetUyeTahsilat(int id)
+        {
+            var _paketler = await _uyeService.GetUyeTahsilat(id);
+            if (_paketler == null) return NotFound();
+            else
+            {
+                return Ok(_paketler);
+            }
+
+        }
+
 
     }
 }

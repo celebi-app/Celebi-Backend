@@ -8,6 +8,7 @@ namespace CelebiWebApi.Services
     {
         Task<UyeInfo?> GetUyeInfo(int id);
         Task<IEnumerable<UyePaketDTO?>?> GetUyePaket(int id);
+        Task<IEnumerable<UyeAidatDTO?>?> GetUyeTahsilat(int id);
     }
 
     public class UyeService : IUyeService
@@ -57,7 +58,8 @@ namespace CelebiWebApi.Services
             List<UyePaketDTO?> _result = new List<UyePaketDTO?>();
 
             _uyePaketler.ForEach(u => {
-                _result.Add(new UyePaketDTO {
+                _result.Add(new UyePaketDTO
+                {
                     UyeId = u.UyeId,
                     Paket = u.Paket,
                     Tutar = u.Tutar,
@@ -70,7 +72,29 @@ namespace CelebiWebApi.Services
             });
 
             return _result;
+        }
+        public async Task<IEnumerable<UyeAidatDTO?>?> GetUyeTahsilat(int id)
+        {
 
+            var _uyeAidatList = await _dbContext.UyeAidat.Where(u => u.UyeId == id).ToListAsync();
+            if (!_uyeAidatList.Any()) return null;
+
+            List<UyeAidatDTO?> _result = new List<UyeAidatDTO?>();
+
+            _uyeAidatList.ForEach(u => {
+                _result.Add(new UyeAidatDTO
+                {
+                    Borc = u.Borc,
+                    Tur = u.Tur,
+                    Donem = u.Donem,
+                    OdemeTarihi = u.OdemeTarihi,
+                    Odenen = u.Odenen,
+                    Aciklama = u.Aciklama,
+                    Kalan = (u.Borc - u.Odenen)
+                });
+            });
+
+            return _result;
         }
 
 
