@@ -1,25 +1,34 @@
 ﻿using CelebiWebApi.DTOs;
 using CelebiWebApi.Services;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace CelebiWebApi.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("api/[controller]")]
     public class UyeController : ControllerBase
     {
         private readonly IUyeService _uyeService;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public UyeController(IUyeService uyeService)
+        public UyeController(IUyeService uyeService, IHttpContextAccessor httpContextAccessor)
         {
             _uyeService = uyeService;
-        }
+            _httpContextAccessor = httpContextAccessor;
 
-        [HttpGet("info/{id}")]
-        public async Task<ActionResult<UyeInfo>> GetUyeInfo(int id)
+        }
+        
+        [HttpGet("info")]
+        public async Task<ActionResult<UyeInfo>> GetUyeInfo()
         {
-            var uyeInfo = await _uyeService.GetUyeInfo(id);
+            var authenticatedUserId = Convert.ToInt32(_httpContextAccessor.HttpContext?.User.FindFirstValue(ClaimTypes.NameIdentifier));
+
+            var uyeInfo = await _uyeService.GetUyeInfo(authenticatedUserId);
             if (uyeInfo == null)
             {
                 return NotFound();
@@ -27,10 +36,12 @@ namespace CelebiWebApi.Controllers
             return Ok(uyeInfo);
         }
 
-        [HttpGet("paket/{id}")]
-        public async Task<ActionResult<IEnumerable<UyePaketDTO?>>> GetUyePaket(int id)
+        [HttpGet("paket")]
+        public async Task<ActionResult<IEnumerable<UyePaketDTO?>>> GetUyePaket()
         {
-            var _paketler = await _uyeService.GetUyePaket(id);
+            var authenticatedUserId = Convert.ToInt32(_httpContextAccessor.HttpContext?.User.FindFirstValue(ClaimTypes.NameIdentifier));
+
+            var _paketler = await _uyeService.GetUyePaket(authenticatedUserId);
             if (_paketler == null) return NotFound();
             else
             {
@@ -39,10 +50,12 @@ namespace CelebiWebApi.Controllers
 
         }
 
-        [HttpGet("tahsilat/{id}")]
-        public async Task<ActionResult<IEnumerable<UyeAidatDTO?>>> GetUyeTahsilat(int id)
+        [HttpGet("tahsilat")]
+        public async Task<ActionResult<IEnumerable<UyeAidatDTO?>>> GetUyeTahsilat()
         {
-            var _paketler = await _uyeService.GetUyeTahsilat(id);
+            var authenticatedUserId = Convert.ToInt32(_httpContextAccessor.HttpContext?.User.FindFirstValue(ClaimTypes.NameIdentifier));
+
+            var _paketler = await _uyeService.GetUyeTahsilat(authenticatedUserId);
             if (_paketler == null) return NotFound();
             else
             {

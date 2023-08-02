@@ -2,7 +2,7 @@
 {
     public class UyePaketDTO
     {
-        public int? Paket { get; set; }
+        public string? Paket { get; set; }
         public double? Tutar { get; set; }
         public DateTime? BaslangicTarihi { get; set; }
         public DateTime? BitisTarihi { get; set; }

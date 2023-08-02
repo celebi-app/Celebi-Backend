@@ -63,7 +63,7 @@ namespace CelebiWebApi.Services
             _uyePaketler.ForEach(u => {
                 _result.Add(new UyePaketDTO
                 {
-                    Paket = u.Paket,
+                    Paket = u.Paket.PaketConverter(),
                     Tutar = u.Tutar,
                     BaslangicTarihi = u.BasTarih,
                     BitisTarihi = u.BitTarih,
@@ -111,13 +111,11 @@ namespace CelebiWebApi.Services
             var kusak = _dbContext.Kusak.Where(u => u.BransId == bransId).ToList().SingleOrDefault(u => u.Sira == kusakId);
             return kusak?.Ad;
         }
-
         private string? GetAltBransAd(int? altBransId)
         {
             var altBrans = _dbContext.AltBrans.FirstOrDefault(ab => ab.Id == altBransId);
             return altBrans?.Ad;
         }
-
         private string? GetAntrenorAd(int? antrenorId)
         {
             var antrenor = _dbContext.Personel.FirstOrDefault(p => p.Id == antrenorId);
